@@ -1,0 +1,36 @@
+If your AdaBoost ensemble is underfitting the training data, you may want to consider adjusting the following hyperparameters:
+
+1. **Number of Estimators (`n_estimators`):**
+   - Increasing the number of weak learners (base estimators) in the ensemble may help the model become more expressive and reduce underfitting.
+   - Try increasing the `n_estimators` hyperparameter and observe the impact on the model's performance.
+
+2. **Weak Learner Complexity:**
+   - The choice of a weak learner can impact underfitting. If your weak learners are too simple, they may struggle to capture the complexity of the data.
+   - You can try using more complex weak learners (e.g., decision trees with greater depth) or adjusting the hyperparameters of the weak learner.
+
+3. **Learning Rate (`learning_rate`):**
+   - The learning rate shrinks the contribution of each weak learner in the ensemble. A lower learning rate can sometimes help the model generalize better.
+   - Experiment with different values for the `learning_rate`. Smaller values may be beneficial for reducing the impact of any overly influential weak learners.
+
+4. **Base Estimator Choice:**
+   - The choice of the base estimator (the weak learner) is crucial. If the base estimator is too weak, the ensemble might underfit.
+   - Experiment with different types of base estimators and their hyperparameters. For example, you might try decision trees with different depths.
+
+Here's an example of how you can adjust these hyperparameters in scikit-learn's AdaBoostClassifier:
+
+```python
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+# Example hyperparameter adjustments
+ada_clf = AdaBoostClassifier(
+    base_estimator=DecisionTreeClassifier(max_depth=2),  # Adjust the weak learner complexity
+    n_estimators=200,  # Increase the number of estimators
+    learning_rate=0.1  # Adjust the learning rate
+)
+
+# Train the AdaBoost classifier
+ada_clf.fit(X_train, y_train)
+```
+
+Experiment with different combinations of these hyperparameter values to find the ones that improve the model's performance and mitigate underfitting. Additionally, consider analyzing the learning curves to understand the behavior of the model with different hyperparameter settings.
